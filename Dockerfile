@@ -2,7 +2,7 @@
 # FROM ubuntu:18.04
 # FROM rapidsai/rapidsai-core:22.08-cuda11.2-runtime-ubuntu18.04-py3.9
 # cuda 11.7 + cudnn8.1 + ubuntu22.04(python3.10)
-FROM nvidia/cuda:11.7.0-cudnn8-runtime-ubuntu22.04
+FROM nvidia/cuda:11.2.0-cudnn8-runtime-ubuntu20.04
 ENV DEBIAN_FRONTEND noninteractive
 RUN mkdir /dev_env
 WORKDIR /dev_env
@@ -23,7 +23,9 @@ RUN apt-get update && apt-get install -y python3-pip
 RUN python3 -m pip install --upgrade pip
 RUN pip3 install --no-cache-dir -r /dev_env/requirements.txt
 RUN pip3 install --no-cache-dir -r /dev_env/ci_requirements.txt
-# RUN pip3 install torch --extra-index-url https://download.pytorch.org/whl/cu112
+RUN pip3 install --upgrade tf_slim \
+&& pip3 install gym==0.11.0
+RUN pip3 install torch --extra-index-url https://download.pytorch.org/whl/cu112
 # RUN pip3 install torch --index-url https://download.pytorch.org/whl/cu118
 
 RUN sed -ri 's/PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config \
