@@ -28,9 +28,10 @@ RUN pip3 install --upgrade tf_slim \
 RUN pip3 install torch --extra-index-url https://download.pytorch.org/whl/cu112
 # RUN pip3 install torch --index-url https://download.pytorch.org/whl/cu118
 
-RUN sed -ri 's/PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config \
-&& sed -ri 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config \
+RUN sed -ri 's/#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config \
+&& sed -ri 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config \
 && sed -ri 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+&& sed -ri 's/#Port 22/Port 22/' /etc/ssh/sshd_config
 RUN mkdir -p /var/run/sshd && chmod 755 /var/run/sshd && chmod 600 -R /etc/ssh
 # 명시적 선언(컨테이너 생성시 재오픈 필요)
 EXPOSE 8888 8787 8786 22
