@@ -347,7 +347,7 @@ class MaskedLanguageModel(nn.Module):
             fc_up_brg = self.fc_up_brg(decoder_output)
             output_vector_up = self.fc_up(fc_up_brg)
             fc_down_brg = self.fc_down_brg(decoder_output)
-            output_vector_down = self.fc_down(fc_up_brg)
+            output_vector_down = self.fc_down(fc_down_brg)
 
             # option 1 - concat 후 어텐션, 판별
             # cc = torch.concat([fc_up_brg, fc_down_brg], dim=-1)
