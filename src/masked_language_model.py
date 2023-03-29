@@ -273,6 +273,9 @@ class MaskedLanguageModel(nn.Module):
         self.pos_encoder = PositionalEncoding(
             hidden_size, max_seq_length, enable_concept
         )
+        
+        # # option 4
+        # self.fc_directions = nn.Linear(hidden_size, 4)
 
     # padding_ignore 사용 안함 - 학습에 영향을 줄 수 있을 것 같음
     def padding_ignore(self, x):
@@ -370,7 +373,13 @@ class MaskedLanguageModel(nn.Module):
 
             # option 4 - decoder_output 을 공용벡터로 그냥 up, down, up_down, std 한꺼번에 구하기
             # 코드 구현 전, 꼭 테스트 해보기 - (hiddens, 4) -> splite (hiddens, 1) X 4
-
+            cc = self.fc_directions(decoder_output)
+            cc_list = torch.splite(cc, 1, dim=-1)
+            output_vector_up = cc_list[0]
+            output_vector_down = cc_list[1]
+            output_vector_up_down = cc_list[2]
+            output_vector_std = cc_list[3]
+            
             return (
                 output_vector_up,
                 output_vector_down,
