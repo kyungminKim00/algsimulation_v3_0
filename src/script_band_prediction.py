@@ -155,7 +155,7 @@ def decode_loss(
         loss += criterion(output_vector_down[down_mask], fwd[down_mask][:, 1][:, None])
     if std_mask.any():
         loss += criterion(output_vector_std[std_mask], fwd[std_mask][:, 2][:, None])
-    if down_mask.any():
+    if std_mask.any():
         loss += criterion(output_vector_up_down[std_mask], val[std_mask][:, None])
     return loss
 
