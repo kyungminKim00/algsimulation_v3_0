@@ -225,9 +225,7 @@ class CrossCorrelation:
             _forward_returns[i] = (Y[i + n_periods] - Y[i]) / Y[i]
 
         for i in range(len(Y) - n_periods):
-            log_stock_prices = np.log(Y[i : i + n_periods])
-            log_price_diffs = np.diff(log_stock_prices)
-            std_dev = np.std(log_price_diffs)
+            std_dev = np.std(_forward_returns[i : i + n_periods])
             _forward_std[i] = std_dev
 
         # align index
